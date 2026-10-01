@@ -465,37 +465,16 @@
     <!-- BANNER PROMO -->
     <section class="pb-8">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="relative overflow-hidden rounded-2xl glass">
-                <img src="assets/banner/banner.jpg" alt="Promoción de la temporada"
-                    width="1024" height="339" loading="lazy" decoding="async"
-                    class="w-full h-auto max-h-[220px] sm:max-h-[260px] object-cover">
-                <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/10"></div>
-
-                <div class="absolute inset-0 flex items-center">
-                    <div class="p-5 sm:p-7 max-w-lg" data-banner-text>
-                        <p class="text-[11px] font-bold uppercase tracking-[0.2em] accent-text mb-1.5">
-                            Temporada de juegos
-                        </p>
-                        <h2 class="font-display text-xl sm:text-2xl lg:text-3xl font-bold text-white leading-tight">
-                            Hasta 20% OFF en tu segunda consola
-                        </h2>
-                        <p class="text-xs sm:text-sm text-gray-300 mt-2 max-w-md">
-                            Aplicá el cupón <span class="font-bold text-white">JUEGO20</span> en el carrito y
-                            llevateNintendo, PlayStation o Xbox con envío gratis a todo Nicaragua.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mt-4">
-                            <button onclick="goToCatalog('all', 'oferta')"
-                                class="accent-bg text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-lg transition-all hover:scale-105">
-                                Ver ofertas <i class="fa-solid fa-arrow-right ml-1.5"></i>
-                            </button>
-                            <button onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})"
-                                class="glass text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl transition-colors hover:bg-white/20">
-                                Explorar catálogo
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <button type="button" onclick="goToCatalog('all', 'oferta')"
+                class="group block w-full relative overflow-hidden rounded-2xl glass transition-transform duration-300 hover:scale-[1.01] focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400"
+                aria-label="Bienvenidos a StoreGames: descubre nuestras ofertas">
+                <img src="assets/banner/banner.jpg"
+                    alt="Bienvenidos a StoreGames. Consolas, PC Gaming, accesorios y coleccionables. Descubre nuestras ofertas."
+                    width="2048" height="678" loading="lazy" decoding="async"
+                    class="block w-full h-auto">
+                <!-- Brillo sutil al pasar el mouse -->
+                <span class="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></span>
+            </button>
         </div>
     </section>
 
