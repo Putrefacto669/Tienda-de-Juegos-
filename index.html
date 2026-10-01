@@ -619,6 +619,8 @@
                     <li><a href="#productos" onclick="setActiveTab('consola')" class="hover:text-white">Consolas</a>
                     </li>
                     <li><a href="#productos" onclick="setActiveTab('juego')" class="hover:text-white">Juegos</a></li>
+                    <li><a href="#productos" onclick="setActiveTab('accesorio')" class="hover:text-white">Accesorios</a>
+                    </li>
                     <li><a href="#productos" onclick="setActiveTab('n3ds')" class="hover:text-white">Nintendo 3DS</a>
                     </li>
                     <li><a href="#productos" onclick="setActiveTab('oferta')" class="hover:text-white">Ofertas</a></li>
@@ -921,7 +923,7 @@
 
         /* =========================================================
            CATÁLOGO
-           type: 'consola' | 'juego'
+           type: 'consola' | 'juego' | 'accesorio'
            gen:  'actual' | 'anterior' | 'retro'
            platform: clave de PLATFORMS (filtro y etiqueta)
            ========================================================= */
@@ -1367,6 +1369,25 @@
                 image: 'assets/productos/NINTENDO/Portatil/Juegos3ds/MajorasMask.jpg', w: 1500, h: 1372,
                 description: 'Link tiene 72 horas para salvar Termina. Máscaras, una luna guardiana del tiempo y la mejor trama de la saga.',
                 specs: ['Tarjeta original', '1 jugador', 'Máscaras y objetos coleccionables', 'Remake para 3DS']
+            },
+            // ---------- SONY · AURICULARES ----------
+            {
+                id: 48, brand: 'sony', line: 'sony', type: 'accesorio', platform: 'headset', gen: 'actual',
+                title: 'Sony MDR-M11',
+                priceNio: 1450, oldPriceNio: 1750,
+                rating: 4.6, reviews: 38, tag: 'Oferta', genre: 'Audio in-ear',
+                image: 'assets/productos/SONY/Auriculares/MDR-M11.webp', w: 820, h: 548,
+                description: 'Intraurales True Wireless con cancelación de ruido y hasta 11 horas de reproducción. Ligeros, con estuche de carga compacto.',
+                specs: ['Cancelación de ruido activa', 'Hasta 11 h con estuche', 'Bluetooth multipunto', 'Resistentes al sudor IPX4']
+            },
+            {
+                id: 49, brand: 'sony', line: 'sony', type: 'accesorio', platform: 'headset', gen: 'actual',
+                title: 'Sony WH-CH510',
+                priceNio: 2890, oldPriceNio: null,
+                rating: 4.8, reviews: 126, tag: 'Favorito', genre: 'Audio inalámbrico',
+                image: 'assets/productos/SONY/Auriculares/SONY-Wh-Ch510.webp', w: 700, h: 700,
+                description: 'Auriculares inalámbricos circumaurales con batería de hasta 40 horas y carga rápida de 3 minutos para 3 horas de música.',
+                specs: ['Hasta 40 h de batería', 'Carga rápida 3 min = 3 h', 'Doble pairamiento multipunto', 'Plegables y livianos']
             }
         ];
 
@@ -1381,13 +1402,15 @@
             'x360': { label: 'Xbox 360' },
             'xone': { label: 'Xbox One' },
             'xseries': { label: 'Xbox Series X|S' },
-            'xperia': { label: 'Xperia' }
+            'xperia': { label: 'Xperia' },
+            'headset': { label: 'Auriculares' }
         };
 
         const TABS = [
             { id: 'all', label: 'Todos', icon: 'fa-solid fa-border-all' },
             { id: 'consola', label: 'Consolas', icon: 'fa-solid fa-tv' },
             { id: 'juego', label: 'Juegos', icon: 'fa-solid fa-dice-d20' },
+            { id: 'accesorio', label: 'Accesorios', icon: 'fa-solid fa-headphones' },
             // Tab con plataforma fija: filtra marca + plataforma a la vez
             { id: 'n3ds', label: 'Nintendo 3DS', icon: 'fa-solid fa-mobile-screen-button', brand: 'nintendo', platform: 'n3ds' },
             { id: 'actual', label: 'Nueva gen', icon: 'fa-solid fa-bolt' },
@@ -1481,6 +1504,7 @@
             if (t.id === 'all') return true;
             if (t.id === 'consola') return p.type === 'consola';
             if (t.id === 'juego') return p.type === 'juego';
+            if (t.id === 'accesorio') return p.type === 'accesorio';
             if (t.id === 'oferta') return isOffer(p);
             if (t.id === 'retro') return p.gen === 'retro';
             if (t.id === 'actual') return p.gen === 'actual';
@@ -1593,6 +1617,12 @@
                 const mine = products.filter(p => p.brand === id);
                 const cons = mine.filter(p => p.type === 'consola').length;
                 const juegos = mine.filter(p => p.type === 'juego').length;
+                const accs = mine.filter(p => p.type === 'accesorio').length;
+                const resumen = [
+                    `${cons} consola${cons === 1 ? '' : 's'}`,
+                    `${juegos} juego${juegos === 1 ? '' : 's'}`
+                ];
+                if (accs) resumen.push(`${accs} accesorio${accs === 1 ? '' : 's'}`);
                 const active = state.currentBrand === id;
                 return `
                     <button data-brand="${id}" onclick="filterBrand('${id}'); document.getElementById('productos').scrollIntoView();"
@@ -1605,7 +1635,7 @@
                         </div>
                         <p class="text-sm text-gray-300 relative">${b.tagline}</p>
                         <div class="flex items-center justify-between mt-4 relative">
-                            <span class="text-xs text-gray-400">${cons} consola${cons === 1 ? '' : 's'} · ${juegos} juego${juegos === 1 ? '' : 's'}</span>
+                            <span class="text-xs text-gray-400">${resumen.join(' · ')}</span>
                             <span class="text-xs font-bold accent-text group-hover:translate-x-1 transition-transform">Explorar <i class="fa-solid fa-arrow-right ml-1"></i></span>
                         </div>
                     </button>`;
@@ -1662,12 +1692,12 @@
             const subtitle = document.getElementById('catalogSubtitle');
             const logoWrap = document.getElementById('catalogLogo');
             const header = document.getElementById('catalogHeader');
-            const tabNames = { all: '', consola: ' · Consolas', juego: ' · Juegos', n3ds: ' · Nintendo 3DS', actual: ' · Nueva gen', oferta: ' · Ofertas', retro: ' · Retro' };
+            const tabNames = { all: '', consola: ' · Consolas', juego: ' · Juegos', accesorio: ' · Accesorios', n3ds: ' · Nintendo 3DS', actual: ' · Nueva gen', oferta: ' · Ofertas', retro: ' · Retro' };
 
             if (state.currentBrand === 'all') {
                 header.removeAttribute('data-brand');
                 title.textContent = 'Catálogo completo' + tabNames[state.currentTab];
-                subtitle.textContent = `${products.length} productos · consolas y juegos de todas las generaciones · Precios en C$ con equivalente en USD`;
+                subtitle.textContent = `${products.length} productos · consolas, juegos y accesorios · Precios en C$ con equivalente en USD`;
                 logoWrap.className = 'hidden';
                 logoWrap.innerHTML = '';
             } else {
